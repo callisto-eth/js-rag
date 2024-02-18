@@ -1,0 +1,2 @@
+run:
+	pnpm tsc && node .

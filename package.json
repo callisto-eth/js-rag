@@ -10,8 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@langchain/google-genai": "^0.0.10",
     "discord": "^0.8.2",
+    "dotenv": "^16.4.4",
     "langchain": "^0.1.20",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19"
   }
 }

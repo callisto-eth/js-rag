@@ -1,10 +1,20 @@
-import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
+import {
+	ChatGoogleGenerativeAI,
+	GoogleGenerativeAIChatInput,
+} from "@langchain/google-genai";
+import SafetySettings from "../config/geminisafetysettings";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-export const GeminiModel = new ChatGoogleGenerativeAI({
+const defaultConfig = {
 	modelName: "gemini-pro",
 	apiKey: process.env.GOOGLE_API_KEY,
-});
+	safetySettings: SafetySettings,
+};
 
+export class GeminiLLM extends ChatGoogleGenerativeAI {
+	constructor(config: GoogleGenerativeAIChatInput = defaultConfig) {
+		super(config);
+	}
+}

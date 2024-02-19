@@ -13,13 +13,6 @@ import { Document, DocumentInterface } from "@langchain/core/documents";
 
 dotenv.config();
 
-export type MessageMetaData = {
-	authorName: string;
-	authorId: string;
-	channelId: string;
-	serverId: string;
-};
-
 const defaultConfig: AstraLibArgs = {
 	token: process.env.ASTRA_DB_APPLICATION_TOKEN || "",
 	endpoint: process.env.ASTRA_DB_API_ENDPOINT || "",
@@ -42,31 +35,29 @@ export class VectorChunkStore extends AstraDBVectorStore {
 		this.config = config;
 	}
 
-	async InsertMessageChunk(textBody: string, ids?: string[]) {
-		const rec = await this.addDocuments(
+	async InsertMessageChunk(textBody: string, channelId: string) {
+		await this.addDocuments(
 			[
 				new Document({
 					pageContent: textBody,
-					metadata: this.config,
+					metadata: { channelId: channelId},
 				}),
 			],
-			ids
 		);
-
-		return rec;
 	}
 
 	async SearchMessageChunk(
 		textBody: string,
-		filters: MessageMetaData
+		channelId?: string,
 	): Promise<DocumentInterface<Record<string, any>>[]> {
-		const res = await this.similaritySearch(textBody, 3, filters);
+		const res = await this.similaritySearch(textBody, 3, channelId? { channelId: channelId}: undefined);
 		return res;
 	}
 
-	async EditMessageChunk(id: string, updatedText: string) {
-		const res = await this.delete({ ids: [id] });
-		await this.InsertMessageChunk(updatedText, [id]);
-		return res;
-	}
+	// Thanks to our dearest astradb langchain js for NOT returning an ID for the document
+	// async EditMessageChunk(id: string, updatedText: string) {
+	// 	const res = await this.delete({ ids: [id] });
+	// 	await this.InsertMessageChunk(updatedText, [id]);
+	// 	return res;
+	// }
 }

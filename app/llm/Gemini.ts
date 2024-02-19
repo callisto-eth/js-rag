@@ -2,7 +2,7 @@ import {
 	ChatGoogleGenerativeAI,
 	GoogleGenerativeAIChatInput,
 } from "@langchain/google-genai";
-import SafetySettings from "../config/geminisafetysettings";
+import SafetySettings from "../config/GeminiSafetySettings";
 import dotenv from "dotenv";
 
 dotenv.config();

@@ -1,5 +1,5 @@
-import { vectorStore, llm } from ".";
-import SystemPrompt from "./config/systemprompt";
+import { VectorStore, LLM } from ".";
+import SystemPrompt from "./config/SystemPrompt";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import {
 	RunnablePassthrough,
@@ -12,11 +12,11 @@ const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
 
 const chain = RunnableSequence.from([
     {
-        context: vectorStore.asRetriever().pipe(formatDocumentsAsString),
+        context: VectorStore.asRetriever().pipe(formatDocumentsAsString),
         query: new RunnablePassthrough(),
     },
     prompt,
-    llm,
+    LLM,
     new StringOutputParser(),
 ])
 

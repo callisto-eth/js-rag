@@ -1,11 +1,11 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import { handler } from "./cogs/event/OnMessageHandler";
-import { VectorChunkStore } from "./db/astra";
-import { GeminiLLM } from "./llm/gemini";
+import { VectorChunkStore } from "./db/Astra";
+import { GeminiLLM } from "./llm/Gemini";
 
-export const vectorStore = new VectorChunkStore();
-export const llm = new GeminiLLM();
+export const VectorStore = new VectorChunkStore();
+export const LLM = new GeminiLLM();
 
 export const client = new Client({
 	intents: [

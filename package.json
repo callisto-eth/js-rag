@@ -5,7 +5,6 @@
   "type": "commonjs",
   "main": "build/index.js",
   "scripts": {
-    "test": "tsc && node build/test.js"
   },
   "keywords": [],
   "author": "",

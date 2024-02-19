@@ -5,7 +5,7 @@
   "type": "commonjs",
   "main": "build/index.js",
   "scripts": {
-    "dev": "tsc && concurrently `tsc -w` 'node --watch build/index.js'"
+    "test": "tsc && node build/test.js"
   },
   "keywords": [],
   "author": "",

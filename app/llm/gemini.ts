@@ -7,3 +7,4 @@ export const GeminiModel = new ChatGoogleGenerativeAI({
 	modelName: "gemini-pro",
 	apiKey: process.env.GOOGLE_API_KEY,
 });
+

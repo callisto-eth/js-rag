@@ -5,6 +5,7 @@
   "type": "commonjs",
   "main": "build/index.js",
   "scripts": {
+    "dev": "rm -rd build && tsc && node build/index.js"
   },
   "keywords": [],
   "author": "",

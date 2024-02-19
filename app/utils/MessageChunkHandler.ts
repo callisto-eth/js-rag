@@ -1,4 +1,3 @@
-import { VectorStore } from "..";
 import { VectorChunkStore } from "../db/Astra";
 
 type ChunkStore = {
@@ -11,26 +10,31 @@ type ChunkStore = {
 export class MessageChunkHandler {
 	vectorStore: VectorChunkStore;
 	currentChunkStore: ChunkStore = {};
-	constructor(vectorStore: VectorChunkStore = VectorStore) {
+
+	static Instance = this;
+
+	constructor(vectorStore: VectorChunkStore) {
 		this.vectorStore = vectorStore;
+		console.log("MessageChunkHandler: Initialized MessageChunkHandler");
 	}
 
 	async createOrUpdateChunk(channelId: string, message: string) {
-        this.currentChunkStore[channelId].currentChunk += message;
-        console.log(
-            `MessageChunkHandler: Updated current chunk for channel ${channelId}\nAdded message ${message} to existing chunk`
-        );
+		console.log(
+			`MessageChunkHandler: Updated current chunk for channel ${channelId}\nAdded message ${message} to existing chunk`
+		);
 
-        if (!this.currentChunkStore[channelId]) {
-            this.currentChunkStore[channelId] = {
-                currentChunk: message,
+		if (!this.currentChunkStore[channelId]) {
+			this.currentChunkStore[channelId] = {
+				currentChunk: message,
 			};
 			return;
 		}
 
-		if (this.currentChunkStore[channelId].currentChunk.length < 1200) return;
+		this.currentChunkStore[channelId].currentChunk += message;
+		if (this.currentChunkStore[channelId].currentChunk.length < 1200)
+			return;
 
-        
+			
 		this.vectorStore.InsertMessageChunk(
 			this.currentChunkStore[channelId].currentChunk.substring(0, 1200),
 			channelId

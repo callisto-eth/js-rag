@@ -1,11 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import { handler } from "./cogs/event/OnMessageHandler";
-import { VectorChunkStore } from "./db/Astra";
-import { GeminiLLM } from "./llm/Gemini";
-
-export const VectorStore = new VectorChunkStore();
-export const LLM = new GeminiLLM();
+import { VectorStore } from "./chain";
 
 export const client = new Client({
 	intents: [
@@ -18,15 +14,11 @@ export const client = new Client({
 
 config();
 
-client.on("ready", (bot) => {
+client.on("ready", async (bot) => {
+	await VectorStore.initialize();
 	console.log(`${bot.user.tag} has logged in!`);
 });
 
-client.on("messageCreate", async (msg) => {
-	if (msg.author.bot) return;
-	if (client.user&&msg.mentions.has(client.user)) {
-		
-	}
-});
+client.on("messageCreate", handler);
 
 client.login(process.env.DISCORD_BOT);

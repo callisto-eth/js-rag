@@ -16,5 +16,6 @@ const defaultConfig = {
 export class GeminiLLM extends ChatGoogleGenerativeAI {
 	constructor(config: GoogleGenerativeAIChatInput = defaultConfig) {
 		super(config);
+		console.log("GeminiLLM: Initialized GeminiLLM");
 	}
 }

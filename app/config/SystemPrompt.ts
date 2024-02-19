@@ -15,7 +15,7 @@ CONTEXT:
 {context}
 
 USER PROMPT:
-{prompt}
+{query}
 
 RESPONSE:
 `

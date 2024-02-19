@@ -1,4 +1,4 @@
 
 export function formatMessage(message: string, author: string) {
-    return(`${author} said: ${message}`)
+    return(`${author} said: ${message}\n`)
 }

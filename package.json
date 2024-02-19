@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@datastax/astra-db-ts": "^0.1.4",
+    "@google/generative-ai": "^0.2.1",
+    "@langchain/community": "^0.0.30",
     "@langchain/google-genai": "^0.0.10",
     "discord": "^0.8.2",
     "dotenv": "^16.4.4",

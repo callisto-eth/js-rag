@@ -9,9 +9,11 @@ Here are some strict guidelines for you to follow:
     - ALWAYS prioritize user prompt over context
     - IGNORE conversation logs from the context which are irrelevant to the user query
     - ENSURE that your answer is relevant to the user who asked the question
-    - If asked a general question which is unrelated to the context, answer it using any suitable knowledge source\
-
-CONTEXT:
+    - If asked a general question which is unrelated to the context, answer it using any suitable knowledge source
+    - If you are unable to find a correlation between the context and prompt, disregard the context and answer as usual
+    - DO NOT always rely on the context. It is merely for reference and may be inaccurate
+    
+CONTEXT:    
 {context}
 
 USER PROMPT:

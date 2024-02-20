@@ -20,4 +20,21 @@ USER PROMPT:
 RESPONSE:
 `
 
-export default SystemPrompt;
+export const Contextualizer = `
+Provided below are mutliple instances of chat logs on an online messaging platform between multiple users.
+Your task is to declutter the provided chat context and return it with appropriate tags.
+
+For example, if the chat log contains:
+UserA said: I purchased a red Lexus yesterday
+
+You should return:
+UserA said: I purchased a red Lexus (userA, car, red)
+
+ONLY tag relevant parts of the chat log, and DO NOT modify the format of the chat log. Do not change user/author data
+ONLY provide the updated chat log in your output. DO NOT add any unnecessary lines
+
+INPUT CHAT LOG:
+{input}
+
+OUTPUT:
+`

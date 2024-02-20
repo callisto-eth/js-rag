@@ -1,4 +1,4 @@
-import SystemPrompt from "./config/SystemPrompt";
+import { SystemPrompt, Contextualizer } from "./config/PromptTemplates";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import {
 	RunnablePassthrough,
@@ -12,19 +12,24 @@ import { GeminiLLM } from "./llm/Gemini";
 export const VectorStore = new VectorChunkStore();
 export const LLM = new GeminiLLM();
 
-
 const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
+const contextualizerPrompt =
+	SystemMessagePromptTemplate.fromTemplate(Contextualizer);
 
-function formatCtxString(ctx:string) {
-    console.log(ctx)
-    return ctx
+function contextualizeCtxString(ctx: string): string {
+	console.log(`IN: ${ctx}`)
+	ContextualizerChain.invoke(ctx).then((out) => {
+		console.log(`OUT: ${out}`)
+		return out;
+	});
+	return "";
 }
 
-const Chain = RunnableSequence.from([
+export const Chain = RunnableSequence.from([
 	{
-		context: VectorStore.asRetriever(3).pipe(
-			formatDocumentsAsString
-		).pipe(formatCtxString),
+		context: VectorStore.asRetriever(3)
+			.pipe(formatDocumentsAsString)
+			.pipe(contextualizeCtxString),
 		query: new RunnablePassthrough(),
 	},
 	prompt,
@@ -32,6 +37,11 @@ const Chain = RunnableSequence.from([
 	new StringOutputParser(),
 ]);
 
-
-
-export default Chain;
+export const ContextualizerChain = RunnableSequence.from([
+	{
+		input: new RunnablePassthrough(),
+	},
+	contextualizerPrompt,
+	LLM,
+	new StringOutputParser(),
+]);

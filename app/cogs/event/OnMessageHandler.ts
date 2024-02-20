@@ -2,7 +2,7 @@ import { Message } from "discord.js";
 import { client } from "../..";
 import { formatMessage } from "../../utils/MessageFormatter";
 import { MessageChunkHandler } from "../../utils/MessageChunkHandler";
-import Chain, { VectorStore } from "../../chain";
+import { VectorStore, Chain} from "../../chain";
 
 const chunkHandler: MessageChunkHandler = new MessageChunkHandler(VectorStore);
 

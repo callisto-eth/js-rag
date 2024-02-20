@@ -33,7 +33,7 @@ export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 
 export const Chain = RunnableSequence.from([
 	{
-		context: ContextualizerChain.pipe(printctx),
+		context: ContextualizerChain,
 		query: new RunnablePassthrough(),
 	},
 	prompt,

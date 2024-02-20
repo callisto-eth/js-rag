@@ -32,6 +32,7 @@ UserA said: I purchased a red Lexus (userA, car, red)
 
 ONLY tag relevant parts of the chat log, and DO NOT modify the format of the chat log. Do not change user/author data
 ONLY provide the updated chat log in your output. DO NOT add any unnecessary lines
+SEPERATE each user message with a new line. A user message starts with "UserName said: "
 
 INPUT CHAT LOG:
 {input}

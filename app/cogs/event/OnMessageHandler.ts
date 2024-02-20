@@ -7,7 +7,7 @@ import { VectorStore, Chain} from "../../chain";
 const chunkHandler: MessageChunkHandler = new MessageChunkHandler(VectorStore);
 
 export async function handler(msg: Message<boolean>) {
-	if (msg.author.bot) return;
+	if (msg.author.id == "1208042095076577300") return;
 
 	if (client.user && msg.mentions.has(client.user)) {
 		chunkHandler.createOrUpdateChunk(

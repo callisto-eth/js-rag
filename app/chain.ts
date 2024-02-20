@@ -3,6 +3,7 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import {
 	RunnablePassthrough,
 	RunnableSequence,
+	RunnableParallel,
 } from "@langchain/core/runnables";
 import { formatDocumentsAsString } from "langchain/util/document";
 import { SystemMessagePromptTemplate } from "@langchain/core/prompts";
@@ -16,32 +17,30 @@ const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
 const contextualizerPrompt =
 	SystemMessagePromptTemplate.fromTemplate(Contextualizer);
 
-function contextualizeCtxString(ctx: string): string {
-	console.log(`IN: ${ctx}`)
-	ContextualizerChain.invoke(ctx).then((out) => {
-		console.log(`OUT: ${out}`)
-		return out;
-	});
-	return "";
+async function contextualizeCtxString(ctx: string) {
+	ContextualizerChain.invoke(ctx).then((fctx) => {
+		console.log(`=====OUT=====\n${fctx}`)
+		return(fctx)
+	})
 }
 
-export const Chain = RunnableSequence.from([
+export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 	{
-		context: VectorStore.asRetriever(3)
+		input: VectorStore.asRetriever(3)
 			.pipe(formatDocumentsAsString)
 			.pipe(contextualizeCtxString),
-		query: new RunnablePassthrough(),
 	},
-	prompt,
+	contextualizerPrompt,
 	LLM,
 	new StringOutputParser(),
 ]);
 
-export const ContextualizerChain = RunnableSequence.from([
+export const Chain = RunnableSequence.from([
 	{
-		input: new RunnablePassthrough(),
+		context: ContextualizerChain,
+		query: new RunnablePassthrough(),
 	},
-	contextualizerPrompt,
+	prompt,
 	LLM,
 	new StringOutputParser(),
 ]);

@@ -17,18 +17,14 @@ const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
 const contextualizerPrompt =
 	SystemMessagePromptTemplate.fromTemplate(Contextualizer);
 
-async function contextualizeCtxString(ctx: string) {
-	ContextualizerChain.invoke(ctx).then((fctx) => {
-		console.log(`=====OUT=====\n${fctx}`)
-		return(fctx)
-	})
+function printctx(ctx: string) {
+	console.log(ctx)
 }
 
 export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 	{
 		input: VectorStore.asRetriever(3)
 			.pipe(formatDocumentsAsString)
-			.pipe(contextualizeCtxString),
 	},
 	contextualizerPrompt,
 	LLM,
@@ -37,7 +33,7 @@ export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 
 export const Chain = RunnableSequence.from([
 	{
-		context: ContextualizerChain,
+		context: ContextualizerChain.pipe(printctx),
 		query: new RunnablePassthrough(),
 	},
 	prompt,

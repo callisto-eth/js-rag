@@ -21,7 +21,13 @@ export async function handler(msg: Message<boolean>) {
 			msg.channel.id,
 			formatMessage(res, "FoundryAI(you)")
 		);
-		await msg.reply(res);
+		
+		if(res.length > 2000) { 
+			for(let i=0; i < Math.floor(res.length / 2000); i++) {
+				await msg.reply(res.substring(i*2000,(i+1)* 2000))
+			}
+		}
+		await msg.reply(res)
         return;
 	}
 

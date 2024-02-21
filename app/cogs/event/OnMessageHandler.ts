@@ -8,8 +8,12 @@ const chunkHandler: MessageChunkHandler = new MessageChunkHandler(VectorStore);
 
 export async function handler(msg: Message<boolean>) {
 	if (msg.author.id == "1208042095076577300") return;
-
+	
 	if (client.user && msg.mentions.has(client.user)) {
+		let reply:Message<boolean>|null = null;
+		if (msg.reference?.messageId) {reply = await msg.channel.messages.fetch(msg.reference.messageId)}
+
+		console.log(reply?.cleanContent)
 		chunkHandler.createOrUpdateChunk(
 			msg.channel.id,
 			formatMessage(msg.cleanContent, msg.author.globalName||msg.author.username)

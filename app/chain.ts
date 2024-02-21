@@ -16,14 +16,14 @@ const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
 const contextualizerPrompt =
 	SystemMessagePromptTemplate.fromTemplate(Contextualizer);
 
-function printctx(ctx: string) {
-	console.log(ctx)
+function printCTX(ctx: string) {
+	console.log(`CTX ======> ${ctx}`);
+	return ctx;
 }
 
 export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 	{
-		input: VectorStore.asRetriever(3)
-			.pipe(formatDocumentsAsString)
+		input: VectorStore.asRetriever(5).pipe(formatDocumentsAsString),
 	},
 	contextualizerPrompt,
 	LLM,
@@ -32,7 +32,7 @@ export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 
 export const Chain = RunnableSequence.from([
 	{
-		context: ContextualizerChain,
+		context: ContextualizerChain.pipe(printCTX),
 		query: new RunnablePassthrough(),
 	},
 	prompt,

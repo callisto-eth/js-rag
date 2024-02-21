@@ -1,9 +1,11 @@
+import { GuildMember } from "discord.js";
 import { VectorChunkStore } from "../db/Astra";
 
 type ChunkStore = {
 	[key: string]: {
 		// ChannelID (prevent conflict of conversations in different channels)
 		currentChunk: string;
+		lastUser:GuildMember
 	};
 };
 
@@ -13,12 +15,13 @@ export class MessageChunkHandler {
 
 	static Instance = this;
 
+
 	constructor(vectorStore: VectorChunkStore) {
 		this.vectorStore = vectorStore;
 		console.log("MessageChunkHandler: Initialized MessageChunkHandler");
 	}
 
-	async createOrUpdateChunk(channelId: string, message: string) {
+	async createOrUpdateChunk(channelId: string, message: string,author:GuildMember) {
 		console.log(
 			`MessageChunkHandler: Updated current chunk for channel ${channelId}\nAdded message ${message} to existing chunk`
 		);
@@ -26,6 +29,7 @@ export class MessageChunkHandler {
 		if (!this.currentChunkStore[channelId]) {
 			this.currentChunkStore[channelId] = {
 				currentChunk: message,
+				lastUser:author
 			};
 			return;
 		}
@@ -45,3 +49,4 @@ export class MessageChunkHandler {
 		return;
 	}
 }
+

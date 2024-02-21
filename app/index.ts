@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
 import { handler } from "./cogs/event/OnMessageHandler";
-import { VectorStore } from "./chain";
+import { VectorChunkStore } from "./db/Astra";
 
 export const client = new Client({
 	intents: [
@@ -15,7 +15,7 @@ export const client = new Client({
 config();
 
 client.on("ready", async (bot) => {
-	await VectorStore.initialize();
+	await VectorChunkStore.Instance.initialize();
 	console.log(`${bot.user.tag} has logged in!`);
 });
 

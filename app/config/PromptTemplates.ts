@@ -11,9 +11,10 @@ Here are some strict guidelines for you to follow:
     - IGNORE conversation logs from the context which are irrelevant to the user query
     - ENSURE that your answer is relevant to the user who asked the question
     - If asked a general question which is unrelated to the context, answer it using any suitable knowledge source
-    - If you are unable to find a correlation between the context and prompt, disregard the context and answer as usual
     - DO NOT always rely on the context. It is merely for reference and may be inaccurate
     - NEVER directly imitate or copy the context. Always reword it and add in your own input
+
+    VERY IMPORTANT: If you are unable to find a correlation between the context and prompt, disregard the context and answer as usual
     
 CONTEXT:    
 {context}
@@ -32,7 +33,7 @@ Here are some guidelines:
     - If you do not understand the context or meaning of a conversation, DO NOT attempt to formulate your own interpretation
     - Try to make the summarized context as clear and concise as possible
     - Filter our irrelevant information and focus on the main points of the conversation
-
+    - IF THE INPUT CHAT LOG IS EMPTY RETURN "NO CONTEXT AVAILABLE"
 INPUT CHAT LOG:
 {input}
 

@@ -35,7 +35,7 @@ const defaultGoogleEmbeddings: EmbeddingsInterface =
 export class VectorChunkStore extends AstraDBVectorStore {
 	config: AstraLibArgs;
 
-	// public static Instance = new this();
+	public static Instance = new this();
 	constructor(
 		embeddings: EmbeddingsInterface = defaultGoogleEmbeddings,
 		config: AstraLibArgs = defaultConfig
@@ -60,7 +60,7 @@ export class VectorChunkStore extends AstraDBVectorStore {
 	): Promise<DocumentInterface<Record<string, any>>[]> {
 		const res = await this.similaritySearch(
 			textBody,
-			3,
+			5,
 			channelId ? { channelId: channelId } : undefined
 		);
 		return res;

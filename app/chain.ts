@@ -9,7 +9,7 @@ import { SystemMessagePromptTemplate } from "@langchain/core/prompts";
 import { VectorChunkStore } from "./db/Astra";
 import { GeminiLLM } from "./llm/Gemini";
 
-export const VectorStore = new VectorChunkStore();
+// export const VectorStore = new VectorChunkStore();
 export const LLM = new GeminiLLM();
 
 const prompt = SystemMessagePromptTemplate.fromTemplate(SystemPrompt);
@@ -23,7 +23,7 @@ function printCTX(ctx: string) {
 
 export const ContextualizerChain: RunnableSequence = RunnableSequence.from([
 	{
-		input: VectorStore.asRetriever(5).pipe(formatDocumentsAsString),
+		input: VectorChunkStore.Instance.asRetriever(5).pipe(formatDocumentsAsString),
 	},
 	contextualizerPrompt,
 	LLM,

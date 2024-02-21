@@ -1,43 +1,21 @@
 import { Message } from "discord.js";
 import { client } from "../..";
-import { formatMessage } from "../../utils/MessageFormatter";
-import { MessageChunkHandler } from "../../utils/MessageChunkHandler";
-import { VectorStore, Chain} from "../../chain";
-
-const chunkHandler: MessageChunkHandler = new MessageChunkHandler(VectorStore);
+import OnInvokeMessage from "./OnInvokeMessage";
+import OnReplyHandler from "./OnReply";
+import OnBaseMessageHandler from "./OnBaseMessage";
 
 export async function handler(msg: Message<boolean>) {
-	if (msg.author.id == "1208042095076577300") return;
+	if (msg.author.id == client.user?.id) return;
+
+	if (msg.reference?.messageId) {
+		await OnReplyHandler(msg);
+		return;
+	}
 	
 	if (client.user && msg.mentions.has(client.user)) {
-		let reply:Message<boolean>|null = null;
-		if (msg.reference?.messageId) {reply = await msg.channel.messages.fetch(msg.reference.messageId)}
-
-		console.log(reply?.cleanContent)
-		chunkHandler.createOrUpdateChunk(
-			msg.channel.id,
-			formatMessage(msg.cleanContent, msg.author.globalName||msg.author.username)
-		);
-		const res = await Chain.invoke(
-			formatMessage(msg.cleanContent, msg.author.globalName||msg.author.username)
-		);
-		chunkHandler.createOrUpdateChunk(
-			msg.channel.id,
-			formatMessage(res, "FoundryAI(you)")
-		);
-		
-		if(res.length > 2000) { 
-			for(let i=0; i < Math.floor(res.length / 2000); i++) {
-				await msg.reply(res.substring(i*2000,(i+1)* 2000))
-			}
-		}
-		await msg.reply(res)
-        return;
+		await OnInvokeMessage(msg);
+		return;
 	}
 
-	await chunkHandler.createOrUpdateChunk(
-		msg.channel.id,
-		formatMessage(msg.cleanContent, msg.author.globalName||msg.author.username)
-	);
-	return; //Add the update shit here...
+	await OnBaseMessageHandler(msg);
 }

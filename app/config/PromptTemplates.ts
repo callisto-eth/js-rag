@@ -22,7 +22,6 @@ CONTEXT:
 USER PROMPT:
 {query}
 
-
 RESPONSE:
 `
 
@@ -34,8 +33,9 @@ Here are some guidelines:
     - Try to make the summarized context as clear and concise as possible
     - Filter our irrelevant information and focus on the main points of the conversation
     - IF THE INPUT CHAT LOG IS EMPTY RETURN "NO CONTEXT AVAILABLE"
-INPUT CHAT LOG:
+INPUT CHAT LOGS:
 {input}
+
 
 OUTPUT:
 `

@@ -11,7 +11,7 @@ export default async function handler(msg: Message<boolean>) {
 	if (!msg.reference?.messageId) return;
 	const refMessage = await msg.fetchReference();
 
-    // On Basic message!
+	// On Basic message!
 	if (refMessage.author.id !== client.user?.id) {
 		await MessageChunkHandler.Instance.createOrUpdateChunk(
 			formatReplyMessage(
@@ -26,8 +26,9 @@ export default async function handler(msg: Message<boolean>) {
 		return;
 	}
 
+	await msg.channel.sendTyping();
 
-    // On Invoke Message!
+	// On Invoke Message!
 	await MessageChunkHandler.Instance.createOrUpdateChunk(
 		formatReplyMessage(
 			msg.cleanContent,
@@ -46,9 +47,9 @@ export default async function handler(msg: Message<boolean>) {
 			refMessage.author.globalName || refMessage.author.username
 		)
 	);
-    
-    await msg.reply(res);
-    
+
+	await msg.reply(res);
+
 	await MessageChunkHandler.Instance.createOrUpdateChunk(
 		formatReplyMessage(
 			res,

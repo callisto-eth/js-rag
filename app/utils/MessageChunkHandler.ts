@@ -35,10 +35,10 @@ export class MessageChunkHandler {
 		}
 
 		this.currentChunkStore[channelId].currentChunk += msg;
-		if (this.currentChunkStore[channelId].currentChunk.length < 600) return;
+		if (this.currentChunkStore[channelId].currentChunk.length < 800) return;
 
 		this.vectorStore.InsertMessageChunk(
-			this.currentChunkStore[channelId].currentChunk.substring(0, 600),
+			this.currentChunkStore[channelId].currentChunk.substring(0, 800),
 			channelId
 		);
 		console.log(

@@ -3,7 +3,6 @@ import { StringOutputParser } from "@langchain/core/output_parsers";
 import {
 	RunnablePassthrough,
 	RunnableSequence,
-	RunnableParallel,
 } from "@langchain/core/runnables";
 import { formatDocumentsAsString } from "langchain/util/document";
 import { SystemMessagePromptTemplate } from "@langchain/core/prompts";

@@ -12,7 +12,7 @@ Here are some strict guidelines for you to follow:
     - If asked a general question which is unrelated to the context, answer it using any suitable knowledge source
     - If you are unable to find a correlation between the context and prompt, disregard the context and answer as usual
     - DO NOT always rely on the context. It is merely for reference and may be inaccurate
-    
+    - NEVER directly imitate or copy the context. Always reword it and add in your own input
 CONTEXT:    
 {context}
 

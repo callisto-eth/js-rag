@@ -22,7 +22,7 @@ function formatCtxString(ctx:string) {
 
 const Chain = RunnableSequence.from([
 	{
-		context: VectorStore.asRetriever(3).pipe(
+		context: VectorStore.asRetriever(5).pipe(
 			formatDocumentsAsString
 		).pipe(formatCtxString),
 		query: new RunnablePassthrough(),
